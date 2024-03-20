@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cryptocurrency Price Prediction</title>
+    <!-- <link href="style.css" rel="stylesheet" /> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
+    <style>
+      html {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Cryptocurrency Price Prediction for a Month using LSTM</h1>
+    </header>
+    <main>
+      <h4>
+        It predicts the future price for one month of cryptocurrencies traded in
+        the Korean market
+      </h4>
+      <!-- <div>코인 정보 스크래핑</div> -->
+      <!-- <form action="/prediction" method="get">
+        <div>(Cryptocurrency 'Bitcoin' input example : BTC or btc)</div>
+        <div>(Please enter the symbol of the coin as above)</div>
+        <div>
+          <label for="coin">Cryptocurrency</label>
+          <input
+            id="coin"
+            required
+            type="search"
+            name="symbol"
+            placeholder="btc or BTC"
+          />
+        </div>
+        <div>
+          <input required type="submit" value="Predict" />
+        </div>
+        <div>
+          After clicking on "Predict", please wait for a moment until you are
+          taken to the Predict page
+        </div>
+      </form> -->
+      <div>
+        <button
+          name="btc"
+          type="button"
+          onclick="location.href='/BTCprediction'"
+        >
+          Bitcoin Price Prediction
+        </button>
+      </div>
+      <div>
+        <button
+          name="eth"
+          type="button"
+          onclick="location.href='/ETHprediction'"
+        >
+          Ethereum Price Prediction
+        </button>
+      </div>
+
+      <h3>LSTM Model Portfolio</h3>
+      <h4>Bitcoin Prediction Portfolio 1</h4>
+      <canvas id="Chart1" width="800" height="400"></canvas>
+      <script>
+        var ctx = document.getElementById("Chart1").getContext("2d");
+        var Chart1 = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: {{ term1_btc | tojson }},
+            datasets: [
+              {
+                label: "Predicted Bitcoin Price",
+                data: {{ predicted1_btc | tojson }},
+                borderColor: "rgba(54, 162, 235, 1)",
+                backgroundColor: "rgba(54, 162, 235, 0.2)",
+                borderWidth: 1,
+              },
+              {
+                label: "Real Bitcoin Price",
+                data: {{ actual1_btc | tojson }},
+                borderColor: "rgba(255, 99, 132, 1)",
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      </script>
+      <h4>Bitcoin Prediction Portfolio 2</h4>
+      <canvas id="Chart2" width="800" height="400"></canvas>
+      <script>
+        var ctx = document.getElementById("Chart2").getContext("2d");
+        var Chart2 = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: {{ term2_btc | tojson }},
+            datasets: [
+              {
+                label: "Predicted Bitcoin Price",
+                data: {{ predicted2_btc | tojson }},
+                borderColor: "rgba(54, 162, 235, 1)",
+                backgroundColor: "rgba(54, 162, 235, 0.2)",
+                borderWidth: 1,
+              },
+              {
+                label: "Real Bitcoin Price",
+                data: {{ actual2_btc | tojson }},
+                borderColor: "rgba(255, 99, 132, 1)",
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      </script>
+      <h4>Bitcoin Prediction Portfolio 3</h4>
+      <canvas id="Chart3" width="800" height="400"></canvas>
+      <script>
+        var ctx = document.getElementById("Chart3").getContext("2d");
+        var Chart3 = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: {{ term3_btc | tojson }},
+            datasets: [
+              {
+                label: "Predicted Bitcoin Price",
+                data: {{ predicted3_btc | tojson }},
+                borderColor: "rgba(54, 162, 235, 1)",
+                backgroundColor: "rgba(54, 162, 235, 0.2)",
+                borderWidth: 1,
+              },
+              {
+                label: "Real Bitcoin Price",
+                data: {{ actual3_btc | tojson }},
+                borderColor: "rgba(255, 99, 132, 1)",
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      </script>
+      <h4>Bitcoin Prediction Portfolio 4</h4>
+      <canvas id="Chart4" width="800" height="400"></canvas>
+      <script>
+        var ctx = document.getElementById("Chart4").getContext("2d");
+        var Chart4 = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: {{ term4_btc | tojson }},
+            datasets: [
+              {
+                label: "Predicted Bitcoin Price",
+                data: {{ predicted4_btc | tojson }},
+                borderColor: "rgba(54, 162, 235, 1)",
+                backgroundColor: "rgba(54, 162, 235, 0.2)",
+                borderWidth: 1,
+              },
+              {
+                label: "Real Bitcoin Price",
+                data: {{ actual4_btc | tojson }},
+                borderColor: "rgba(255, 99, 132, 1)",
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      </script>
+      <h4>Bitcoin Prediction Portfolio 5</h4>
+      <canvas id="Chart5" width="800" height="400"></canvas>
+      <script>
+        var ctx = document.getElementById("Chart5").getContext("2d");
+        var Chart5 = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: {{ term5_btc | tojson }},
+            datasets: [
+              {
+                label: "Predicted Bitcoin Price",
+                data: {{ predicted5_btc | tojson }},
+                borderColor: "rgba(54, 162, 235, 1)",
+                backgroundColor: "rgba(54, 162, 235, 0.2)",
+                borderWidth: 1,
+              },
+              {
+                label: "Real Bitcoin Price",
+                data: {{ actual5_btc | tojson }},
+                borderColor: "rgba(255, 99, 132, 1)",
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      </script>
+      <h4>Ethereum Prediction Portfolio 1</h4>
+      <canvas id="Chart6" width="800" height="400"></canvas>
+      <script>
+        var ctx = document.getElementById("Chart6").getContext("2d");
+        var Chart6 = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: {{ term1_eth | tojson }},
+            datasets: [
+              {
+                label: "Predicted Ethereum Price",
+                data: {{ predicted1_eth | tojson }},
+                borderColor: "rgba(153, 102, 255, 1)",
+                backgroundColor: "rgba(153, 102, 255, 0.2)",
+                borderWidth: 1,
+              },
+              {
+                label: "Real Ethereum Price",
+                data: {{ actual1_eth | tojson }},
+                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      </script>
+      <h4>Ethereum Prediction Portfolio 2</h4>
+      <canvas id="Chart7" width="800" height="400"></canvas>
+      <script>
+        var ctx = document.getElementById("Chart7").getContext("2d");
+        var Chart7 = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: {{ term2_eth | tojson }},
+            datasets: [
+              {
+                label: "Predicted Ethereum Price",
+                data: {{ predicted2_eth | tojson }},
+                borderColor: "rgba(153, 102, 255, 1)",
+                backgroundColor: "rgba(153, 102, 255, 0.2)",
+                borderWidth: 1,
+              },
+              {
+                label: "Real Ethereum Price",
+                data: {{ actual2_eth | tojson }},
+                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      </script>
+      <h4>Ethereum Prediction Portfolio 3</h4>
+      <canvas id="Chart8" width="800" height="400"></canvas>
+      <script>
+        var ctx = document.getElementById("Chart8").getContext("2d");
+        var Chart8 = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: {{ term3_eth | tojson }},
+            datasets: [
+              {
+                label: "Predicted Ethereum Price",
+                data: {{ predicted3_eth | tojson }},
+                borderColor: "rgba(153, 102, 255, 1)",
+                backgroundColor: "rgba(153, 102, 255, 0.2)",
+                borderWidth: 1,
+              },
+              {
+                label: "Real Ethereum Price",
+                data: {{ actual3_eth | tojson }},
+                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      </script>
+      <h4>Ethereum Prediction Portfolio 4</h4>
+      <canvas id="Chart9" width="800" height="400"></canvas>
+      <script>
+        var ctx = document.getElementById("Chart9").getContext("2d");
+        var Chart9 = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: {{ term4_eth | tojson }},
+            datasets: [
+              {
+                label: "Predicted Ethereum Price",
+                data: {{ predicted4_eth | tojson }},
+                borderColor: "rgba(153, 102, 255, 1)",
+                backgroundColor: "rgba(153, 102, 255, 0.2)",
+                borderWidth: 1,
+              },
+              {
+                label: "Real Ethereum Price",
+                data: {{ actual4_eth | tojson }},
+                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      </script>
+      <h4>Ethereum Prediction Portfolio 5</h4>
+      <canvas id="Chart10" width="800" height="400"></canvas>
+      <script>
+        var ctx = document.getElementById("Chart10").getContext("2d");
+        var Chart10 = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: {{ term5_eth | tojson }},
+            datasets: [
+              {
+                label: "Predicted Ethereum Price",
+                data: {{ predicted5_eth | tojson }},
+                borderColor: "rgba(153, 102, 255, 1)",
+                backgroundColor: "rgba(153, 102, 255, 0.2)",
+                borderWidth: 1,
+              },
+              {
+                label: "Real Ethereum Price",
+                data: {{ actual5_eth | tojson }},
+                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      </script>
+    </main>
+    <footer>
+      <code>Predictive Model Last Updated Date : 2021-07-26</code>
+    </footer>
+  </body>
+</html>

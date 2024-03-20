@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bitcoin Price Prediction</title>
+    <!--    <link href="style.css" rel="stylesheet" />-->
+    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js"></script>-->
+    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
+    <style>
+      section {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
+        text-align: center;
+      }
+      html {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header><h1>Bitcoin Price Prediction</h1></header>
+    <main>
+      <h3>1) Graph View</h3>
+      <div>You can check the price by hovering your cursor over the graph</div>
+      <canvas id="Chart" width="800" height="400"></canvas>
+      <script>
+        var ctx = document.getElementById("Chart").getContext("2d");
+        var Chart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: {{ days | tojson }},
+            datasets: [
+              {
+                label: "Predicted Bitcoin Price",
+                data: {{ y_preds | tojson }},
+                borderColor: "rgba(54, 162, 235, 1)",
+                backgroundColor: "rgba(54, 162, 235, 0.2)",
+                borderWidth: 1,
+              },
+              {
+                label: "Bitcoin Latest Signed Price",
+                data: {{ latest | tojson }},
+                borderColor: "rgba(255, 159, 64, 1)",
+                backgroundColor: "rgba(255, 159, 64, 0.2)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      </script>
+      <h3>2) Table View</h3>
+      <div>
+        <button
+          name="btc_export"
+          type="button"
+          onclick="window.open('/BTCexport')"
+        >
+          Export Bitcoin Price Prediction Result to CSV
+        </button>
+      </div>
+      <section>
+        <h4>Bitcoin Latest Signed Price</h4>
+        <h4>{{price_latest}}</h4>
+        {% for i in range(30)%}
+        <span>{{days[i]}}</span>
+        <span>{{y_preds[i]}}</span>
+        {% endfor %}
+      </section>
+      <!-- <table align="center">
+        <tr bgcolor="gold">
+          <td align="center">Bitcoin Latest Signed Price</td>
+          <td align="right">{{price_latest}}</td>
+        </tr>
+        <tr bgcolor="skyblue" align="center">
+          <td colspan="2">Predicted Bitcoin price for a Month</td>
+        </tr>
+          <td align="center">01</td>
+          <td align="right">{{day01}}</td>
+        </tr>
+          <td align="center">02</td>
+          <td align="right">{{day02}}</td>
+        </tr>
+          <td align="center">03</td>
+          <td align="right">{{day03}}</td>
+        </tr>
+          <td align="center">04</td>
+          <td align="right">{{day04}}</td>
+        </tr>
+          <td align="center">05</td>
+          <td align="right">{{day05}}</td>
+        </tr>
+          <td align="center">06</td>
+          <td align="right">{{day06}}</td>
+        </tr>
+          <td align="center">07</td>
+          <td align="right">{{day07}}</td>
+        </tr>
+          <td align="center">08</td>
+          <td align="right">{{day08}}</td>
+        </tr>
+          <td align="center">09</td>
+          <td align="right">{{day09}}</td>
+        </tr>
+          <td align="center">10</td>
+          <td align="right">{{day10}}</td>
+        </tr>
+          <td align="center">11</td>
+          <td align="right">{{day11}}</td>
+        </tr>
+          <td align="center">12</td>
+          <td align="right">{{day12}}</td>
+        </tr>
+          <td align="center">13</td>
+          <td align="right">{{day13}}</td>
+        </tr>
+          <td align="center">14</td>
+          <td align="right">{{day14}}</td>
+        </tr>
+          <td align="center">15</td>
+          <td align="right">{{day15}}</td>
+        </tr>
+          <td align="center">16</td>
+          <td align="right">{{day16}}</td>
+        </tr>
+          <td align="center">17</td>
+          <td align="right">{{day17}}</td>
+        </tr>
+          <td align="center">18</td>
+          <td align="right">{{day18}}</td>
+        </tr>
+          <td align="center">19</td>
+          <td align="right">{{day19}}</td>
+        </tr>
+          <td align="center">20</td>
+          <td align="right">{{day20}}</td>
+        </tr>
+          <td align="center">21</td>
+          <td align="right">{{day21}}</td>
+        </tr>
+          <td align="center">22</td>
+          <td align="right">{{day22}}</td>
+        </tr>
+          <td align="center">23</td>
+          <td align="right">{{day23}}</td>
+        </tr>
+          <td align="center">24</td>
+          <td align="right">{{day24}}</td>
+        </tr>
+          <td align="center">25</td>
+          <td align="right">{{day25}}</td>
+        </tr>
+          <td align="center">26</td>
+          <td align="right">{{day26}}</td>
+        </tr>
+          <td align="center">27</td>
+          <td align="right">{{day27}}</td>
+        </tr>
+          <td align="center">28</td>
+          <td align="right">{{day28}}</td>
+        </tr>
+          <td align="center">29</td>
+          <td align="right">{{day29}}</td>
+        </tr>
+          <td align="center">30</td>
+          <td align="right">{{day30}}</td>
+        </tr>
+      </table> -->
+    </main>
+  </body>
+</html>

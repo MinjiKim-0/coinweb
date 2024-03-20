@@ -1,0 +1,17 @@
+html {
+  background-color: lightblue;
+  text-align: center;
+}
+
+header {
+  color: rgb(21, 78, 80);
+  background-color: lightblue;
+}
+
+h4 {
+  color: rgb(14, 42, 43);
+}
+
+footer {
+  margin: 100px;
+}
